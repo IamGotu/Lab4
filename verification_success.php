@@ -15,6 +15,11 @@
                     <p>Your email has been successfully verified. You can now login to your account.</p>
                 </div>
             </form>
+            <div class="text-center">
+                <a href="signup.php" class="mr-2">Create Account</a>
+                <a href="Terms&Condition.php" class="text-align"> Term of Service</a>
+                <a href="Loginform.php" class="mr-2">Login Account</a>
+            </div>
         </div>
     </body>
 </html>
