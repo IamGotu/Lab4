@@ -26,6 +26,8 @@ if (isset($_POST['signup_btn'])) {
     $address = validate($_POST['address']);
     $password = validate($_POST['password']);
     $profile_picture = $_FILES['profile_picture']['name']; // Original file name
+    $Status = validate($_POST['Status']);
+    $Active = validate($_POST['Active']);
     $Status = 'Not Verified'; // Set default value
     $Active = 'Not Active'; // Set default value
 
@@ -34,7 +36,7 @@ if (isset($_POST['signup_btn'])) {
 
     if (!in_array($file_extension, $allowed_extension)) {
         $_SESSION['status'] = "You are allowed with only jpg, png, jpeg image";
-        header('Location: signupform.php');
+        header('Location: signupform.php?error=You are allowed with only jpg, png, jpeg image');
         exit(0);
     }
 
@@ -59,7 +61,7 @@ if (isset($_POST['signup_btn'])) {
     $insert_query = "INSERT INTO user_profile (full_name, email, phone_number, address, password, profile_picture, Status, Active, verify_token)
     VALUES ('$full_name', '$email', '$phone_number', '$address', '$password', '$profile_picture', '$Status', '$Active', '$verify_token')";
 
-    if (mysqli_query($conn, $sql)) {
+    if (mysqli_query($conn, $insert_query)) {
 
         // Send verification email
         $subject = "Email Verification";

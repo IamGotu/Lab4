@@ -56,6 +56,7 @@ include('config/db_conn.php');
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Address</th>
+                                        <th>Active</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,7 +75,8 @@ include('config/db_conn.php');
                                                 <td><?php echo $row['email']; ?></td>
                                                 <td><?php echo $row['phone_number']; ?></td>
                                                 <td><?php echo $row['address']; ?></td>
-                                            </tr>
+                                                <td><?php echo $row['Active']; ?></td>
+                                            </tr>   
                                     <?php
                                         }
                                     } else {
@@ -98,18 +100,4 @@ include('config/db_conn.php');
 </div>
 
 <?php include('includes/script.php'); ?>
-
-<script>
-    $(document).ready(function() {
-        $('.deletebtn').click(function(e) {
-            e.preventDefault();
-        
-            var user_id = $(this).val();
-            //console.log(user_id);
-            $('.delete_user_id') .val (user_id);
-            $('#DeletModal') .modal ('show');
-        });
-    });
-</script>
-
 <?php include('includes/footer.php'); ?>
