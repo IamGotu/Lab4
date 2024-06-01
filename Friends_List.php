@@ -14,12 +14,12 @@ include('config/db_conn.php');
         <div class="container-fluid">
             <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Friends List</h1>
+                <h1 class="m-0">Friends</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Friends List</li>
+                <li class="breadcrumb-item active">Friends</li>
                 </ol>
             </div><!-- /.col -->
             </div><!-- /.row -->
@@ -31,22 +31,8 @@ include('config/db_conn.php');
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <?php
-                        if (isset($_SESSION['status']))
-                        {
-                            echo "<h4>".$_SESSION['status']."<h4>";
-                            unset($_SESSION['status']);
-                        }
-                    ?>
                     
                     <!-- Your HTML code -->
-                    <?php
-                    if(isset($_SESSION['error'])) {
-                        echo "<div class='alert alert-danger'>".$_SESSION['error']."</div>";
-                        unset($_SESSION['error']); // Clear the error message after displaying it
-                    }
-                    ?>
-
                     <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>

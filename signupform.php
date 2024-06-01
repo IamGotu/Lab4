@@ -14,17 +14,18 @@ include('includes/header.php');
                     <div class="card-body">
                         <!-- Your sign-up form goes here -->
                         <form action="signupcode.php" method="POST" id="signupForm">
+                            
+                        <!-- Check if the 'error' parameter is set in the URL and display message-->
+                        <?php if (isset($_GET['error'])) { ?>
+                            <p class="text-danger"><?php echo $_GET['error']; ?></p>
+                            <?php } elseif (isset($_GET['message'])) { ?>
+                            <p><?php echo htmlspecialchars($_GET['message']); ?></p>
+                        <?php } ?>
+    
                             <div class="form-group">
                                 <label for="">Full Name</label>
                                 <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
                             </div>
-
-                            <!-- Check if the 'error' parameter is set in the URL and display message-->
-                            <?php
-                                if (isset($_GET['error'])) {
-                                    echo htmlspecialchars($_GET['error']);
-                                }
-                            ?>
 
                             <div class="form-group">
                                 <label for="">Email</label>

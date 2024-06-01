@@ -9,6 +9,15 @@ include('includes/sidebar.php');
 <div class="content-wrapper">
 
 <!-- Content Header (Page header) -->
+
+<?php
+// Check if user is not logged in, redirect to login page
+if (isset($_SESSION['success_message'])) {
+  header("Location: Dashboard.php");
+  exit();
+}
+?>
+
 <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -27,17 +36,6 @@ include('includes/sidebar.php');
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-md-12">
-            
-            <?php
-              include('message.php');
-            ?>
-            <?php
-              if (isset($_SESSION['status']))
-                {
-                  echo "<h4>".$_SESSION['status']."<h4>";
-                  unset($_SESSION['status']);
-                }
-            ?>
 
           </div>
 

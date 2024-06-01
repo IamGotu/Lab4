@@ -35,7 +35,6 @@ if (isset($_POST['signup_btn'])) {
     $file_extension = pathinfo($profile_picture, PATHINFO_EXTENSION);
 
     if (!in_array($file_extension, $allowed_extension)) {
-        $_SESSION['status'] = "You are allowed with only jpg, png, jpeg image";
         header('Location: signupform.php?error=You are allowed with only jpg, png, jpeg image');
         exit(0);
     }
