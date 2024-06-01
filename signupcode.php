@@ -58,9 +58,8 @@ if (isset($_POST['signup_btn'])) {
     // Insert user data into the database
     $insert_query = "INSERT INTO user_profile (full_name, email, phone_number, address, password, profile_picture, Status, Active, verify_token)
     VALUES ('$full_name', '$email', '$phone_number', '$address', '$password', '$profile_picture', '$Status', '$Active', '$verify_token')";
-    $insert_query_run = mysqli_query($conn, $insert_query);
 
-    if ($insert_query_run) {
+    if (mysqli_query($conn, $sql)) {
 
         // Send verification email
         $subject = "Email Verification";
@@ -92,20 +91,23 @@ if (isset($_POST['signup_btn'])) {
             $mail->send();
 
             // Redirect with a success message
-            $_SESSION['status'] = "Account created successfully. Please check your email for verification.";
-            header('Location: Loginform.php');
+            header("Location: VerifyEmail.php?email=$email");
             exit();
         } catch (Exception $e) {
             // Display an error message if the verification email could not be sent
-            $_SESSION['status'] = "Verification email could not be sent. Please try again later.";
-            header("Location: signupform.php");
+            header("Location: signupform.php?error=Verification email could not be sent. Please try again later.");
             exit();
         }
     } else {
         // Display an error message if the query fails
-        $_SESSION['status'] = "Failed to create account. Please try again.";
-        header('Location: signupform.php');
-        exit();
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
+
+    mysqli_close($conn);
+} else {
+    // Redirect the user if they try to access this page directly
+    header("Location: signupform.php?error=You cannot access this site directly");
+    echo 'You cannot access this site directly';
+    exit();
 }
 ?>

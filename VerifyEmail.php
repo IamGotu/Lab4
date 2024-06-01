@@ -14,6 +14,12 @@
 
                 <h2 class="mb-4">Email Verification</h2>
 
+                <?php
+                    if (isset($_GET['error'])) {
+                        echo htmlspecialchars($_GET['error']);
+                    }
+                ?>
+
                 <div class="form-group">
                     <p>Please enter the verification code sent to your email:</p>
                 </div>
