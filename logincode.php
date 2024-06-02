@@ -42,7 +42,7 @@ if (isset($_POST['login_btn'])) {
             $row = mysqli_fetch_assoc($result);
 
             // Update Active status to "Active"
-            $update_sql = "UPDATE user_profile SET Active='Active' WHERE email='$email'";
+            $update_sql = "UPDATE user_profile SET Active='Online' WHERE email='$email'";
             mysqli_query($conn, $update_sql);
 
             // storing in session variable

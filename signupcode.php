@@ -32,6 +32,7 @@ if (isset($_POST['signup_btn'])) {
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['status'] = "Invalid email format.";
         header("Location: signupform.php?error=Invalid email format");
         exit();
     }
@@ -40,6 +41,7 @@ if (isset($_POST['signup_btn'])) {
     $sql_check_email = "SELECT * FROM user_profile WHERE email='$email'";
     $result_check_email = mysqli_query($conn, $sql_check_email);
     if (mysqli_num_rows($result_check_email) > 0) {
+        $_SESSION['status'] = "Email already exists.";
         header("Location: signupform.php?error=Email already exists");
         exit();
     }
@@ -87,6 +89,7 @@ if (isset($_POST['signup_btn'])) {
             exit();
         } catch (Exception $e) {
             // Display an error message if the verification email could not be sent
+            $_SESSION['status'] = "Verification email could not be sent. Please try again later.";
             header("Location: signupform.php?error=Verification email could not be sent. Please try again later.");
             exit();
         }
@@ -96,10 +99,5 @@ if (isset($_POST['signup_btn'])) {
     }
 
     mysqli_close($conn);
-} else {
-    // Redirect the user if they try to access this page directly
-    header("Location: signupform.php?error=You cannot access this site directly");
-    echo 'You cannot access this site directly';
-    exit();
 }
 ?>

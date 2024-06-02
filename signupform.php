@@ -3,6 +3,8 @@ include('config/db_conn.php');
 include('includes/header.php');
 ?>
 
+
+
 <div class="section">
     <div class="container">
         <div class="row justify-content-center">
@@ -14,6 +16,10 @@ include('includes/header.php');
                     <div class="card-body">
                         <!-- Your sign-up form goes here -->
                         <form action="signupcode.php" method="POST" id="signupForm">
+
+                        <?php
+                        include('message.php');
+                        ?>
                             
                         <!-- Check if the 'error' parameter is set in the URL and display message-->
                         <?php if (isset($_GET['error'])) { ?>

@@ -9,15 +9,6 @@ include('includes/sidebar.php');
 <div class="content-wrapper">
 
 <!-- Content Header (Page header) -->
-
-<?php
-// Check if user is not logged in, redirect to login page
-if (isset($_SESSION['success_message'])) {
-  header("Location: Dashboard.php");
-  exit();
-}
-?>
-
 <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">

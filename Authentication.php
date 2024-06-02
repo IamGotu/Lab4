@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['auth']))
+if(!isset($_SESSION['auth_user']))
 {
-    $_SESSION['auth_status'] = "Login to Access Dashboard";
+    $_SESSION['status'] = "Login to Access Dashboard";
     header("Location: Loginform.php");
 }
 ?>

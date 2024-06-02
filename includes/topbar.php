@@ -11,29 +11,26 @@
 
     </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-          <?php
-            if(isset($_SESSION['auth']))
-            {
-              echo $_SESSION['auth_user'] ['full_name'];
-            }
-            else
-            {
-              echo "Not Logged in";
-            }
-          ?>
-        </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <form action="Logout.php" method="POST">
-              <button type="submit" name="logout_btn" class="dropdown-item">Logout</button>
-            </form>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+              <?php
+                if(isset($_SESSION['auth'])) {
+                  echo $_SESSION['auth_user']['full_name'];
+                } else {
+                  echo "Not Logged in";
+                }
+              ?>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <form action="Logout.php" method="POST">
+                <button type="submit" name="logout_btn" class="dropdown-item">Logout</button>
+              </form>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
 
       <!-- Navbar Search -->
       <li class="nav-item">

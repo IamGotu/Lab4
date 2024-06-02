@@ -1,23 +1,34 @@
 <?php
 session_start();
 
-// include file for database connection
-include "db_conn.php";
+// Include file for database connection
+include('config/db_conn.php');
 
-// Update Active status to "Not Active" for the logged-out user
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-    $update_sql = "UPDATE user SET Active='Not Active' WHERE username='$username'";
-    mysqli_query($conn, $update_sql);
+if (isset($_POST['logout_btn'])) {
+    function validate($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    if (isset($_SESSION['auth'])) {
+        // Fetch email from session
+        $full_name = $_SESSION['auth_user']['full_name'];
+
+        // Update Active status to "Offline" for the logged-out user
+        $update_sql = "UPDATE user_profile SET Active='Offline' WHERE full_name='$full_name'";
+        mysqli_query($conn, $update_sql);
+    }
+
+    // Unset all of the session variables
+    session_unset();
+
+    // Destroy the session
+    session_destroy();
+
+    // Redirect to login page
+    header("Location: Loginform.php");
+    exit();
 }
-
-// Unset all of the session variables
-session_unset();
-
-// Destroy the session
-session_destroy();
-
-// Redirect to login page
-header("Location: Loginform.php");
-exit();
 ?>
