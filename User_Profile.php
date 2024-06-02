@@ -59,12 +59,12 @@ include('config/db_conn.php');
                                     
                                 <div class="form-group">
                                     <label for="profile_picture">Profile Picture</label>
-                                    <input type="file" id="profile_picture" name="profile_picture" class="form-control-file">
+                                    <input type="file" id="profile_picture" name="profile_picture" class="form-control-file" >
                                 </div>
-
-
-                                </div>
+                            </div>
+                            <div class="text-right">
                                 <button type="submit" name="UpdateUser" class="btn btn-info">Update</button>
+                            </div>
                             </form>
                         <?php else: ?>
                             <p class="text-danger">You are not logged in.</p>
@@ -96,5 +96,6 @@ include('config/db_conn.php');
         </div>
     </section>
 </div>
+
 <?php include('includes/script.php'); ?>
 <?php include('includes/footer.php'); ?>
