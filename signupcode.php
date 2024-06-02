@@ -25,19 +25,10 @@ if (isset($_POST['signup_btn'])) {
     $phone_number = validate($_POST['phone_number']);
     $address = validate($_POST['address']);
     $password = validate($_POST['password']);
-    $profile_picture = $_FILES['profile_picture']['name']; // Original file name
     $Status = validate($_POST['Status']);
     $Active = validate($_POST['Active']);
     $Status = 'Not Verified'; // Set default value
     $Active = 'Not Active'; // Set default value
-
-    $allowed_extension = array('png', 'jpg', 'jpeg');
-    $file_extension = pathinfo($profile_picture, PATHINFO_EXTENSION);
-
-    if (!in_array($file_extension, $allowed_extension)) {
-        header('Location: signupform.php?error=You are allowed with only jpg, png, jpeg image');
-        exit(0);
-    }
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
