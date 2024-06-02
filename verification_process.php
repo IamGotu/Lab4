@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Get the verification code and email from the form
-    $verification_code = $_POST['verification_code'];
-    $email = $_POST['email'];
+     $verification_code = validate ($_POST['verification_code']);
+    $email = validate ($_POST['email']);
 
     // SQL query to check if the verification code matches the one stored in the database
     $sql = "SELECT * FROM user_profile WHERE Email='$email' AND verify_token='$verification_code' ";
