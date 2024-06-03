@@ -66,9 +66,11 @@ if (isset($_POST['signup_btn'])) {
         $insert_query = "INSERT INTO user_profile (full_name, email, birthdate, phone_number, address, password, profile_picture, Status, Active, verify_token)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        // Bind parameters
         $stmt = $conn->prepare($insert_query);
         $stmt->bind_param("ssssssssss", $full_name, $email, $birthdateStr, $phone_number, $address, $password, $profile_picture, $Status, $Active, $verify_token);
 
+        // Execute stmt
         if ($stmt->execute()) {
 
         // Send verification email
