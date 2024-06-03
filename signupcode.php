@@ -27,6 +27,8 @@ if (isset($_POST['signup_btn'])) {
     $password = validate($_POST['password']);
     $Status = validate($_POST['Status']);
     $Active = validate($_POST['Active']);
+    $profile_picture = validate ($_FILES['profile_picture']['name']);
+    $profile_picture = 'user.png'; // Set default value
     $Status = 'Not Verified'; // Set default value
     $Active = 'Not Active'; // Set default value
 
