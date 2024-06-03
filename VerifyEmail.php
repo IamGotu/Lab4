@@ -11,11 +11,9 @@
             <form action="verification_process.php" method="post" class="mt-5">
 
                 <h2 class="mb-4">Email Verification</h2>
-
+                
                 <?php
-                    if (isset($_GET['error'])) {
-                        echo htmlspecialchars($_GET['error']);
-                    }
+                    include('message.php');
                 ?>
 
                 <div class="form-group">

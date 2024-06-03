@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('config/db_conn.php');
 include('includes/header.php');
 ?>
@@ -20,13 +21,6 @@ include('includes/header.php');
                         <?php
                         include('message.php');
                         ?>
-                            
-                        <!-- Check if the 'error' parameter is set in the URL and display message-->
-                        <?php if (isset($_GET['error'])) { ?>
-                            <p class="text-danger"><?php echo $_GET['error']; ?></p>
-                            <?php } elseif (isset($_GET['message'])) { ?>
-                            <p><?php echo htmlspecialchars($_GET['message']); ?></p>
-                        <?php } ?>
     
                             <div class="form-group">
                                 <label for="">Full Name</label>
@@ -63,6 +57,7 @@ include('includes/header.php');
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <input type="hidden" name="profile_picture" class="form-control-file" >
                                     <input type="hidden" name="Status" class="form-control">
                                     <input type="hidden" name="Active" class="form-control">
                                 </div>
@@ -82,21 +77,6 @@ include('includes/header.php');
         </div>
     </div>
 </div>
-
-<script>
-    // JavaScript code to validate password match
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-        var password = document.getElementById('password').value;
-        var confirm_password = document.getElementById('confirm_password').value;
-
-        if (password != confirm_password) {
-            e.preventDefault();
-            document.getElementById('password_message').innerText = "Passwords do not match";
-        } else {
-            document.getElementById('password_message').innerText = "";
-        }
-    });
-</script>
 
 <?php include('includes/script.php'); ?>
 <?php include('includes/footer.php'); ?>
