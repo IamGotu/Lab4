@@ -16,6 +16,7 @@ if(isset($_POST['UpdateUser'])) {
     // Ensure fields are initialized
     $user_id = $_POST['user_id'];
     $full_name = $_POST['full_name'];
+    $birthdate = $_POST['birthdate'];
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $address = $_POST['address'];
@@ -31,18 +32,31 @@ if(isset($_POST['UpdateUser'])) {
         exit(0);
     }
 
-    // Construct SQL query for updating user profile
-    $sql = "UPDATE user_profile SET full_name = ?, email = ?, phone_number = ?, address = ?, password = ?, profile_picture = ? WHERE user_id = ?";
+    // Calculate age
+    $birthday = new DateTime($birthdate);
+    $currentDate = new DateTime();
+    $age = $currentDate->diff($birthday)->y;
 
-    // Prepare the statement
-    $stmt = mysqli_prepare($conn, $sql);
+    // Check if age is less than 14
+    if ($age < 14) {
+        $_SESSION['status'] = "Only 14 years old or above are allowed.";
+        header("Location: User_Profile.php?error=Only 14 years old or above are allowed.");
+        exit();
+    } else {
+    
+    // Convert DateTime object to string for SQL
+    $birthdateStr = $birthday->format('Y-m-d');
+
+    // Construct SQL query for updating user profile
+    $update_sql = "UPDATE user_profile SET full_name = ?, birthdate = ?, email = ?, phone_number = ?, address = ?, password = ?, profile_picture = ? WHERE user_id = ?";
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "ssssssi", $full_name, $email, $phone_number, $address, $password, $profile_picture, $user_id);
-
-    // Execute the statement
-    if (mysqli_stmt_execute($stmt)) {
-        move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'uploads/'.$profile_picture); // Move uploaded file with original name
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param("sssssssi", $full_name, $birthdateStr, $email, $phone_number, $address, $password, $profile_picture, $user_id);
+    
+    // Execute stmt
+    if ($stmt->execute()) {
+    move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'uploads/'.$profile_picture); // Move uploaded file with original name
         $_SESSION['status'] = "User Update Successfully"; // Set success message
         header('Location: User_Profile.php');
         exit(0);
@@ -50,12 +64,13 @@ if(isset($_POST['UpdateUser'])) {
         $_SESSION['status'] = "Profile Picture Updating Failed";
         header('Location: User_Profile.php');
         exit(0);
+        }
     }
 } else {
     // Display an error message if the form was not submitted
     $_SESSION['status'] = "User Updating Failed";
     header("Location: User_Profile.php");
     exit(0);
-}
+    }
 ?>
 

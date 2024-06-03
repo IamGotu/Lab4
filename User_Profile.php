@@ -16,13 +16,10 @@ include('config/db_conn.php');
                         <h3 class="card-title">Edit Profile</h3>
                     </div>
                     <div class="card-body">
+                        
                         <?php
                             include('message.php');
                         ?>
-                        <?php if(isset($_SESSION['auth'])): ?>
-                            <?php if (isset($_GET['error'])): ?>
-                                <p><?php echo $_GET['error'] ?></p>
-                            <?php endif ?>
 
                             <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
 
@@ -31,20 +28,26 @@ include('config/db_conn.php');
                                     <label for="full_name">Full Name</label>
                                     <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" value="<?php echo $_SESSION['auth_user']['full_name'] ?>" required>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="">Birthdate</label>
+                                    <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="<?php echo $_SESSION['auth_user']['email'] ?>" required>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
                                     <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $_SESSION['auth_user']['phone_number'] ?>" required>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <input type="text" id="address" name="address" class="form-control" placeholder="Address" value="<?php echo $_SESSION['auth_user']['address'] ?>" required>
-                                </div>
-
-                                
+                                </div>   
 
                                 <div class="row">
                                     <div class="col-md-6">
@@ -69,9 +72,6 @@ include('config/db_conn.php');
                                 <button type="submit" name="UpdateUser" class="btn btn-info">Update</button>
                             </div>
                             </form>
-                        <?php else: ?>
-                            <p class="text-danger">You are not logged in.</p>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -81,19 +81,6 @@ include('config/db_conn.php');
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <?php
-                        if (isset($_SESSION['status']))
-                        {
-                            echo "<h4>".$_SESSION['status']."<h4>";
-                            unset($_SESSION['status']);
-                        }
-                    ?>
-                    <?php
-                    if(isset($_SESSION['error'])) {
-                        echo "<div class='alert alert-danger'>".$_SESSION['error']."</div>";
-                        unset($_SESSION['error']); // Clear the error message after displaying it
-                    }
-                    ?>
                 </div>
             </div>
         </div>
