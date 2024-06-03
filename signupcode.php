@@ -22,15 +22,14 @@ if (isset($_POST['signup_btn'])) {
 
     $full_name = validate($_POST['full_name']);
     $email = validate($_POST['email']);
+    $birthdate = validate($_POST['birthdate']);
     $phone_number = validate($_POST['phone_number']);
     $address = validate($_POST['address']);
     $password = validate($_POST['password']);
-    $Status = validate($_POST['Status']);
-    $Active = validate($_POST['Active']);
-    $profile_picture = validate ($_FILES['profile_picture']['name']);
+    $verify_token = bin2hex(random_bytes(2)); // Generate a unique verification token
     $profile_picture = 'user.png'; // Set default value
-    $Status = 'Not Verified'; // Set default value
-    $Active = 'Not Active'; // Set default value
+    $Status = 'Pending'; // Set default value
+    $Active = 'Offline'; // Set default value
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -48,14 +47,29 @@ if (isset($_POST['signup_btn'])) {
         exit();
     }
 
-    // Generate a unique verification token
-    $verify_token = bin2hex(random_bytes(2));
+    // Calculate age
+    $birthday = new DateTime($birthdate);
+    $currentDate = new DateTime();
+    $age = $currentDate->diff($birthday)->y;
 
-    // Insert user data into the database
-    $insert_query = "INSERT INTO user_profile (full_name, email, phone_number, address, password, profile_picture, Status, Active, verify_token)
-    VALUES ('$full_name', '$email', '$phone_number', '$address', '$password', '$profile_picture', '$Status', '$Active', '$verify_token')";
+    // Check if age is less than 14
+    if ($age < 14) {
+        $_SESSION['status'] = "You must be at least 14 years old to register.";
+        header("Location: signupform.php?error=You must be at least 14 years old to register.");
+        exit();
+    } else {
+    
+    // Convert DateTime object to string for SQL
+    $birthdateStr = $birthday->format('Y-m-d');
 
-    if (mysqli_query($conn, $insert_query)) {
+        // Insert user data into the database
+        $insert_query = "INSERT INTO user_profile (full_name, email, birthdate, phone_number, address, password, profile_picture, Status, Active, verify_token)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $conn->prepare($insert_query);
+        $stmt->bind_param("ssssssssss", $full_name, $email, $birthdateStr, $phone_number, $address, $password, $profile_picture, $Status, $Active, $verify_token);
+
+        if ($stmt->execute()) {
 
         // Send verification email
         $subject = "Email Verification";
@@ -97,9 +111,14 @@ if (isset($_POST['signup_btn'])) {
         }
     } else {
         // Display an error message if the query fails
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "Error: " . $stmt->error;
     }
 
-    mysqli_close($conn);
+    $stmt->close();
+    $conn->close();
+
+    }
+} else {
+echo "Invalid request";
 }
 ?>

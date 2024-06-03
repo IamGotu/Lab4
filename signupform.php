@@ -28,6 +28,11 @@ include('includes/header.php');
                             </div>
 
                             <div class="form-group">
+                                <label for="">Birthdate</label>
+                                <input type="date" name="birthdate" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="">Email</label>
                                 <input type="text" name="email" class="form-control" placeholder="Email" required>
                             </div>
