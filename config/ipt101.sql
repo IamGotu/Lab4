@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 07:20 PM
+-- Generation Time: Jun 06, 2024 at 10:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,7 @@ CREATE TABLE `user` (
 CREATE TABLE `user_profile` (
   `user_id` int(11) NOT NULL,
   `full_name` varchar(45) NOT NULL,
-  `birthdate` date NOT NULL,
+  `birthdate` text NOT NULL,
   `email` varchar(45) NOT NULL,
   `phone_number` varchar(45) NOT NULL,
   `address` varchar(45) NOT NULL,
