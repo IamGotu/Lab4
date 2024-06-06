@@ -33,26 +33,54 @@ include('config/db_conn.php');
 
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-
             
-                <!-- User's Information -->
+            <!-- User's Information -->
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">User's Information</h3>
                     </div>
+                    <br>
                     <div class="card-body">
+                    <div style="display: flex; justify-content: center;">
+                        <img src="<?php echo 'uploads/' . $profilePicture; ?>" class="profile-image img-circle elevation-3" style="opacity: .8; width: 200px; height: 200px;">
+                    </div>
 
-                        <a href="User_Profile.php" class="brand-link">
-                            <img src="<?php echo 'uploads/' . $profilePicture; ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
-                        </a>
+                    <?php
+                    // Assuming you have validated the user's login credentials
+                    $user_id = $_SESSION['auth_user']['user_id']; // Use the logged-in user's ID
+
+                    $query = "SELECT birthdate FROM user_profile WHERE user_id = ?";
+                    if ($stmt = mysqli_prepare($conn, $query)) {
+                        mysqli_stmt_bind_param($stmt, "i", $user_id);
+                        mysqli_stmt_execute($stmt);
+                        mysqli_stmt_bind_result($stmt, $birthdate);
+                        mysqli_stmt_fetch($stmt);
+                        mysqli_stmt_close($stmt);
+                        
+                        // Store the birthdate in the session
+                        $_SESSION['auth_user']['birthdate'] = $birthdate;
+                    }
+                    ?>
+
+                    <br><br>
+                        <label>Full Name</label>
                         <br>
                         <?php echo $_SESSION['auth_user']['full_name'] ?>
+                        <br><br>
+                        <label>Email</label
+                        ><br>
+                        <?php echo $_SESSION['auth_user']['email'] ?>
+                        <br><br>
+                        <label>Phone Number</label>
                         <br>
                         <?php echo $_SESSION['auth_user']['phone_number'] ?>
+                        <br><br>
+                        <label>Address</label>
                         <br>
                         <?php echo $_SESSION['auth_user']['address'] ?>
+                        <br><br>
+                        <label>Birthdate</label>
                         <br>
                         <?php echo $_SESSION['auth_user']['birthdate'] ?>
 
@@ -62,7 +90,7 @@ include('config/db_conn.php');
             </div>
 
             <!-- Updating User's Profile Picture -->
-            <div class="col-md-8">
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Update User's Profile Picture</h3>
@@ -87,10 +115,8 @@ include('config/db_conn.php');
                 </div>
             </div>
 
-
-
-                <!-- Updating User Information -->
-            <div class="col-md-8 offset-md-4">
+            <!-- Updating User Information -->
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Update User's Information</h3>
@@ -124,8 +150,8 @@ include('config/db_conn.php');
                 </div>
             </div>
 
-                <!-- Updating User Information -->
-            <div class="col-md-8 offset-md-4">
+            <!-- Updating User's Birthdate -->
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Update User's Birthdate</h3>
@@ -141,7 +167,7 @@ include('config/db_conn.php');
                             </div>
 
                                 <div class="text-right">
-                                <button type="submit" name="UpdateInfo" class="btn btn-info">Update</button>
+                                <button type="submit" name="UpdateBirthdate" class="btn btn-info">Update</button>
                             </div>
                         </form>
 
@@ -151,7 +177,7 @@ include('config/db_conn.php');
 
 
                 <!-- Updating User Password -->
-                 <div class="col-md-8 offset-md-4">
+                 <div class="col-md">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Update User's Password</h3>
@@ -160,14 +186,14 @@ include('config/db_conn.php');
 
                                 <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>">
-
+<!--
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="password">Current Password</label>
                                             <input type="password" name="password" class="form-control" placeholder="Password" required>
                                         </div>
                                     </div>
-
+-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="password">New Password</label>
@@ -191,8 +217,6 @@ include('config/db_conn.php');
                         </div>
                     </div>
 
-            </div>
-        </div>
     </div>
 </section>
 
