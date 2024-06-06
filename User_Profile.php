@@ -7,7 +7,7 @@ include('config/db_conn.php');
 ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper">   
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -27,29 +27,55 @@ include('config/db_conn.php');
     </div>
     <!-- /.content-header -->
 
+    <?php
+        include('message.php');
+    ?>
+
 <section class="content">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4">
 
             
-                <!-- Updating User's Profile Picture -->
+                <!-- User's Information -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">User's Information</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <a href="User_Profile.php" class="brand-link">
+                            <img src="<?php echo 'uploads/' . $profilePicture; ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
+                        </a>
+                        <br>
+                        <?php echo $_SESSION['auth_user']['full_name'] ?>
+                        <br>
+                        <?php echo $_SESSION['auth_user']['phone_number'] ?>
+                        <br>
+                        <?php echo $_SESSION['auth_user']['address'] ?>
+                        <br>
+                        <?php echo $_SESSION['auth_user']['birthdate'] ?>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Updating User's Profile Picture -->
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Update User's Profile Picture</h3>
                     </div>
                     <div class="card-body">
                         
-                        <?php
-                            include('message.php');
-                        ?>
-
                         <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>" required>
 
+                            <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>" required>
+            
                             <div class="form-group">
                                 <label for="profile_picture">Profile Picture</label>
-                                <input type="file" id="profile_picture" name="profile_picture" class="form-control-file" required>
+                                <input type="file" id="profile_picture" name="profile_picture" class="form-control-file" value="<?php echo $_File['auth_user']['profile_picture'] ?>" required>
                             </div>
 
                             <div class="text-right">
@@ -59,18 +85,17 @@ include('config/db_conn.php');
 
                     </div>
                 </div>
+            </div>
+
 
 
                 <!-- Updating User Information -->
+            <div class="col-md-8 offset-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Update User's Information</h3>
                     </div>
                     <div class="card-body">
-                        
-                        <?php
-                            include('message.php');
-                        ?>
 
                         <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>" required>
@@ -79,12 +104,7 @@ include('config/db_conn.php');
                                 <label for="full_name">Full Name</label>
                                 <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" value="<?php echo $_SESSION['auth_user']['full_name'] ?>" required>
                             </div>
-
-                            <div class="form-group">
-                                <label for="">Birthdate</label>
-                                <input type="date" id="birthdate" name="birthdate" class="form-control" value="<?php echo $_SESSION['auth_user']['full_name'] ?>" required>
-                            </div>
-
+                            
                             <div class="form-group">
                                 <label for="phone_number">Phone Number</label>
                                 <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $_SESSION['auth_user']['phone_number'] ?>" required>
@@ -102,18 +122,41 @@ include('config/db_conn.php');
 
                     </div>
                 </div>
+            </div>
+
+                <!-- Updating User Information -->
+            <div class="col-md-8 offset-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Update User's Birthdate</h3>
+                    </div>
+                    <div class="card-body">
+                        
+                        <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>" required>
+
+                            <div class="form-group">
+                                <label for="">Birthdate</label>
+                                <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+                            </div>
+
+                                <div class="text-right">
+                                <button type="submit" name="UpdateInfo" class="btn btn-info">Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
 
 
                 <!-- Updating User Password -->
+                 <div class="col-md-8 offset-md-4">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Update User's Password</h3>
                             </div>
                             <div class="card-body">
-                                
-                                <?php
-                                    include('message.php');
-                                ?>
 
                                 <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>">
@@ -146,6 +189,7 @@ include('config/db_conn.php');
                                     
                             </div>
                         </div>
+                    </div>
 
             </div>
         </div>
