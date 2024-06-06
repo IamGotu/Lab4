@@ -17,7 +17,6 @@ if(isset($_POST['UpdateUser'])) {
     $user_id = $_POST['user_id'];
     $full_name = $_POST['full_name'];
     $birthdate = $_POST['birthdate'];
-    $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $address = $_POST['address'];
     $password = $_POST['password'];
@@ -48,11 +47,11 @@ if(isset($_POST['UpdateUser'])) {
     $birthdateStr = $birthday->format('Y-m-d');
 
     // Construct SQL query for updating user profile
-    $update_sql = "UPDATE user_profile SET full_name = ?, birthdate = ?, email = ?, phone_number = ?, address = ?, password = ?, profile_picture = ? WHERE user_id = ?";
+    $update_sql = "UPDATE user_profile SET full_name = ?, birthdate = ?, phone_number = ?, address = ?, password = ?, profile_picture = ? WHERE user_id = ?";
 
     // Bind parameters
     $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("sssssssi", $full_name, $birthdateStr, $email, $phone_number, $address, $password, $profile_picture, $user_id);
+    $stmt->bind_param("ssssssi", $full_name, $birthdateStr, $phone_number, $address, $password, $profile_picture, $user_id);
     
     // Execute stmt
     if ($stmt->execute()) {
