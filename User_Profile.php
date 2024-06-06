@@ -49,17 +49,22 @@ include('config/db_conn.php');
                     <?php
                     // Assuming you have validated the user's login credentials
                     $user_id = $_SESSION['auth_user']['user_id']; // Use the logged-in user's ID
-
-                    $query = "SELECT birthdate FROM user_profile WHERE user_id = ?";
+                    
+                    $query = "SELECT full_name, birthdate, email, phone_number, address, password FROM user_profile WHERE user_id = ?";
                     if ($stmt = mysqli_prepare($conn, $query)) {
                         mysqli_stmt_bind_param($stmt, "i", $user_id);
                         mysqli_stmt_execute($stmt);
-                        mysqli_stmt_bind_result($stmt, $birthdate);
+                        mysqli_stmt_bind_result($stmt, $full_name, $birthdate, $email, $phone_number, $address, $password);
                         mysqli_stmt_fetch($stmt);
                         mysqli_stmt_close($stmt);
                         
                         // Store the birthdate in the session
+                        $_SESSION['auth_user']['full_name'] = $full_name;
+                        $_SESSION['auth_user']['email'] = $email;
+                        $_SESSION['auth_user']['phone_number'] = $phone_number;
+                        $_SESSION['auth_user']['address'] = $address;
                         $_SESSION['auth_user']['birthdate'] = $birthdate;
+                        $_SESSION['auth_user']['password'] = $password;
                     }
                     ?>
 
@@ -103,7 +108,7 @@ include('config/db_conn.php');
             
                             <div class="form-group">
                                 <label for="profile_picture">Profile Picture</label>
-                                <input type="file" id="profile_picture" name="profile_picture" class="form-control-file" value="<?php echo $_File['auth_user']['profile_picture'] ?>" required>
+                                <input type="file" id="profile_picture" name="profile_picture" class="form-control-file" required>
                             </div>
 
                             <div class="text-right">
@@ -123,28 +128,28 @@ include('config/db_conn.php');
                     </div>
                     <div class="card-body">
 
-                        <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>" required>
+                    <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['auth_user']['user_id'] ?>">
 
-                            <div class="form-group">
-                                <label for="full_name">Full Name</label>
-                                <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" value="<?php echo $_SESSION['auth_user']['full_name'] ?>" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="phone_number">Phone Number</label>
-                                <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $_SESSION['auth_user']['phone_number'] ?>" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" id="address" name="address" class="form-control" placeholder="Address" value="<?php echo $_SESSION['auth_user']['address'] ?>" required>
-                            </div>   
+                        <div class="form-group">
+                            <label for="full_name">Full Name</label>
+                            <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" value="<?php echo $_SESSION['auth_user']['full_name'] ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $_SESSION['auth_user']['phone_number'] ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Address" value="<?php echo $_SESSION['auth_user']['address'] ?>" required>
+                        </div>   
 
-                            <div class="text-right">
-                                <button type="submit" name="UpdateInfo" class="btn btn-info">Update</button>
-                            </div>
-                        </form>
+                        <div class="text-right">
+                            <button type="submit" name="UpdateInfo" class="btn btn-info">Update</button>
+                        </div>
+                    </form>
 
                     </div>
                 </div>
@@ -163,7 +168,7 @@ include('config/db_conn.php');
 
                             <div class="form-group">
                                 <label for="">Birthdate</label>
-                                <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+                                <input type="date" id="birthdate" name="birthdate" class="form-control" value="<?php echo $_SESSION['auth_user']['birthdate'] ?>" required>
                             </div>
 
                                 <div class="text-right">
@@ -186,22 +191,15 @@ include('config/db_conn.php');
 
                                 <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" id="user_id" name="user_id" class="form-control" value="<?php echo $_SESSION['auth_user']['user_id'] ?>">
-<!--
-                                    <div class="col-md-6">
+
+                                    <div class="col-md">
                                         <div class="form-group">
-                                            <label for="password">Current Password</label>
-                                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                                        </div>
-                                    </div>
--->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="password">New Password</label>
-                                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                            <label for="new_password">New Password</label>
+                                            <input type="password" name="new_password" class="form-control" placeholder="Password" required>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-6">
+                                    <div class="col-md">
                                         <div class="form-group">
                                             <label for="confirm_password">Confirm Password</label>
                                             <input type="password" name="confirm_password" class="form-control" placeholder="Password" required>
