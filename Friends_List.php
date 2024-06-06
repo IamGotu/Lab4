@@ -28,7 +28,7 @@ include('config/db_conn.php');
     <!-- /.content-header -->
 
     <section class="content">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     
@@ -37,8 +37,8 @@ include('config/db_conn.php');
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Full Name</th>
+                                        <th>Birthdate</th>
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Address</th>
@@ -56,8 +56,8 @@ include('config/db_conn.php');
                                         {
                                     ?>
                                             <tr>
-                                                <td><?php echo $row['user_id']; ?></td>
                                                 <td><?php echo $row['full_name']; ?></td>
+                                                <td><?php echo $row['birthdate']; ?></td>
                                                 <td><?php echo $row['email']; ?></td>
                                                 <td><?php echo $row['phone_number']; ?></td>
                                                 <td><?php echo $row['address']; ?></td>
